@@ -184,6 +184,6 @@ class EventsController extends BaseController
     {
         throw new \Exception('implement in coding task 2');
 
-        $workshop_get = "SELECT * FROM `events` WHERE `id` =( SELECT distinct(`event_id`) FROM `workshops` WHERE `start` >= CURDATE())";
+        $workshop_get = "SELECT * FROM `events` WHERE `id` IN ( SELECT distinct(`event_id`) FROM `workshops` WHERE `start` >= CURDATE())";
     }
 }
