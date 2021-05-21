@@ -183,7 +183,14 @@ class EventsController extends BaseController
     public function getFutureEventsWithWorkshops()
     {
         throw new \Exception('implement in coding task 2');
-
-        $workshop_get = "SELECT * FROM `events` WHERE `id` IN ( SELECT distinct(`event_id`) FROM `workshops` WHERE `start` >= CURDATE())";
+        $events = DB::table('events')->whereIn('id', function ($query) {
+            $query->select('event_id')->distinct()
+                ->from('workshops')
+                ->where('start >= CURDATE()');
+        })->get();
+        return response()->json([
+            "data" => $events
+        ], 200);
+        //$workshop_get = "SELECT * FROM `events` WHERE `id` IN ( SELECT distinct(`event_id`) FROM `workshops` WHERE `start` >= CURDATE())";
     }
 }
