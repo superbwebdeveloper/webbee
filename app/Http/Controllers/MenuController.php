@@ -94,7 +94,14 @@ class MenuController extends BaseController
     ]
      */
 
-    public function getMenuItems() {
+    public function getMenuItems()
+    {
         throw new \Exception('implement in coding task 3');
+        $menu_branch = " select  *
+from    (select * from menu_items
+         order by parent_id, id) tablename,
+        (select @pv := '1,2,5') initialisation
+where   find_in_set(parent_id, @pv) > 0
+and     @pv := concat(@pv, ',', parent_id)";
     }
 }
